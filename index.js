@@ -3,19 +3,21 @@ import axios from 'axios';
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
+import dotenv from 'dotenv';
 
-const moises = new Moises({ apiKey: "b8b81646-c5e3-4d79-ab89-90701448c70d" })
+dotenv.config(); 
 
-const apiUrlJob = 'https://api.music.ai/api/job/d29324f6-bbc1-4011-a0a5-9884cbfb8b37';
+const apiKey = process.env.API_KEY;
+const moises = new Moises({ apiKey })
+
+const apiUrlJob = `https://api.music.ai/api/job/${process.env.JOB_ID_SEP_VOCAL}`;
 const apiUrlUpload = 'https://api.music.ai/api/upload';
 
-//const jobId = 'd29324f6-bbc1-4011-a0a5-9884cbfb8b37';
-const apiKey = 'b8b81646-c5e3-4d79-ab89-90701448c70d';
+const port = process.env.PORT;
 
-const urlCarelessWhisper = 'public/samples/vlc-record-2024-01-24-17h34m27s-Careless Whisper-.mp3'
+const urlCarelessWhisper = process.env.LOCAL_URL_CARELESS_WHISPER;
 
 const app = express();
-const port = 3000;
 
 
 async function jobMoises () {
