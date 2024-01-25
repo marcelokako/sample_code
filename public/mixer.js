@@ -1,6 +1,10 @@
 $(document).ready(function() {
    
-    const player = new Tone.Player("samples/vlc-record-2024-01-24-17h34m27s-Careless Whisper-.mp3");
+    console.log(users);
+    // Add the user to the database here
+
+    const player = new Tone.Player(`stems/${userId}/vlc-record-2024-01-24-17h34m27s-Careless Whisper-.mp3`);
+
     const pitch_shift = new Tone.PitchShift({
         pitch: 0
     }).toDestination();
@@ -8,7 +12,6 @@ $(document).ready(function() {
     $("#btn_start_audio").on("click", function() {
         if(player.context.state == "suspended"){
 
-            
             let pitch_val = $("#input_pitch_value").val();
             pitch_shift.pitch = pitch_val;
             player.disconnect();

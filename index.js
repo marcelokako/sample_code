@@ -1,30 +1,36 @@
 import Moises from "moises/sdk.js"
-import axios from 'axios';
 import express from 'express';
 import path from 'path';
-import fs from 'fs';
 import dotenv from 'dotenv';
 
 dotenv.config(); 
 
 const apiKey = process.env.API_KEY;
 const moises = new Moises({ apiKey })
+const users = {};
 
-const apiUrlJob = `https://api.music.ai/api/job/${process.env.JOB_ID_SEP_VOCAL}`;
-const apiUrlUpload = 'https://api.music.ai/api/upload';
+// Usuário de homologação
+const userIdTeste = 1;
+
+// Populando objeto com usuários da sessão
+users[userIdTeste] = {"urlsong" : process.env.LOCAL_URL_CARELESS_WHISPER};
+
+// const apiUrlJob = `https://api.music.ai/api/job/${process.env.JOB_ID_SEP_VOCAL}`;
 
 const port = process.env.PORT;
 
-const urlCarelessWhisper = process.env.LOCAL_URL_CARELESS_WHISPER;
+// const urlCarelessWhisper = process.env.LOCAL_URL_CARELESS_WHISPER;
 
 const app = express();
 
+// Function que separa a voz e instrumento. Primeiro add um Job para o Workflow "wf-separacao-vocal-instrumento", 
+// depois baixa o resultado para uma pasta local
 
-async function jobMoises () {
-    const downloadUrl = await moises.uploadFile(urlCarelessWhisper)
+async function jobSeparaVozInstrumento (url) {
+    const downloadUrl = await moises.uploadFile(url)
 
     const jobId = await moises.addJob(
-        "job-separa",
+        `job-${users[1]}`,
         "wf-separacao-vocal-instrumento",
         { inputUrl: downloadUrl }
         )
@@ -33,14 +39,15 @@ async function jobMoises () {
         
         if (job.status === "SUCCEEDED") {
             console.log("Carregando...")
-            const files = await moises.downloadJobResults(job, "./stems")
+            const files = await moises.downloadJobResults(job, `.public/stems/${users[1]}`)
             console.log("Resultado:", files)
         } else {
             console.log("Job falhou!")
         }
+
+        await moises.deleteJob(jobId)
         
     }
-
 
 app.use(express.static('public'));
 
@@ -50,7 +57,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/mixer', (req, res) => {
-    jobMoises();
+    // jobSeparaVozInstrumento(urlCarelessWhisper);
     res.sendFile(path.join(__dirname, 'public', 'mixer.html'));
 });
 
