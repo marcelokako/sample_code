@@ -1,15 +1,14 @@
 import Moises from "moises/sdk"
 
-const moises = new Moises({ apiKey: "your-api-key" })
+const moises = new Moises({ apiKey: "b8b81646-c5e3-4d79-ab89-90701448c70d" })
 
-const downloadUrl = await moises.uploadFile("./song.mp3")
+const downloadUrl = await moises.uploadFile(urlCarelessWhisper)
 
 const jobId = await moises.addJob(
-  "job-testefodaci",
-  "moises/stems-vocals-drums-bass-other",
+  "job-separa",
+  "wf-separacao-vocal-instrumento",
   { inputUrl: downloadUrl }
 )
-
 
 const job = await moises.waitForJobCompletion(jobId)
 
