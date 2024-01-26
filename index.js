@@ -2,11 +2,22 @@ import Moises from "moises/sdk.js"
 import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
+import pkg from 'pg';
+const { Pool } = pkg;
 
 dotenv.config(); 
 
 const apiKey = process.env.API_KEY;
 const moises = new Moises({ apiKey })
+
+const pool = new Pool({
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
+  });
+
 const users = {};
 
 // Usuário de homologação
@@ -60,6 +71,16 @@ app.get('/mixer', (req, res) => {
     // jobSeparaVozInstrumento(urlCarelessWhisper);
     res.sendFile(path.join(__dirname, 'public', 'mixer.html'));
 });
+
+app.get('/api/get-user-url_song', async (req, res) => {
+    try {
+      const result = await pool.query('SELECT * FROM users');
+      res.json(result.rows);
+    } catch (error) {
+      console.error('Erro ao obter dados do banco:', error);
+      res.status(500).json({ error: 'Erro interno no servidor' });
+    }
+  });
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);

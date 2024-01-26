@@ -1,40 +1,65 @@
 $(document).ready(function() {
-   
-    console.log(users);
-    // Add the user to the database here
+    let current_users = {};
+    
+    get_user_url_song()
+    function get_user_url_song(){
 
-    const player = new Tone.Player(`stems/${userId}/vlc-record-2024-01-24-17h34m27s-Careless Whisper-.mp3`);
+        fetch('/api/get-user-url_song')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Erro ao obter dados do banco');
+          }
+          return response.json();
+        })
+        .then(data => {
+            console.log('Dados recebidos:', data);
 
-    const pitch_shift = new Tone.PitchShift({
-        pitch: 0
-    }).toDestination();
+            const player = new Tone.Player(`stems/${data[0].userid}/vocal-isolado.wav`);
+
+            const pitch_shift = new Tone.PitchShift({
+                pitch: 0
+            }).toDestination();
+
+            current_users[data[0].userid] = {
+                "player": player,
+                "pitch_shift": pitch_shift
+            }
+
+        })
+        .catch(error => {
+          console.error('Erro:', error.message);
+        });
+    }
+
 
     $("#btn_start_audio").on("click", function() {
-        if(player.context.state == "suspended"){
-
+        if(current_users["1"]["player"].context.state == "suspended"){
+        // player -> current_users["1"]["player"] 
+        // pitch_shift -> current_users["1"]["pitch_shift"] 
+        
             let pitch_val = $("#input_pitch_value").val();
-            pitch_shift.pitch = pitch_val;
-            player.disconnect();
-            player.connect(pitch_shift);
-            player.start();
-        } else if (player.context.state == "running"){
+            current_users["1"]["pitch_shift"].pitch = pitch_val;
+            current_users["1"]["player"].disconnect();
+            current_users["1"]["player"].connect(current_users["1"]["pitch_shift"]);
+            current_users["1"]["player"].start();
+        } else if (current_users["1"]["player"].context.state == "running"){
            let offset = $("#btn_start_audio").data("pausado");
-           player.start(0, offset)
+           current_users["1"]["player"].start(0, offset)
         }
     })
     
     $("#input_pitch_value").on("change", function(){
-        pitch_shift.pitch = $(this).val();
+        current_users["1"]["pitch_shift"].pitch = $(this).val();
     })
 
     $("#btn_pause_audio").on("click", function() {
-        if(player.context.state == "running"){
-            player.stop();
-            $("#btn_start_audio").data("pausado", player.now());
+        if(current_users["1"]["player"].context.state == "running"){
+            current_users["1"]["player"].stop();
+            $("#btn_start_audio").data("pausado", current_users["1"]["player"].now());
         }
     })
 
     $("#check_context").on("click", function() {
-        console.log(player.context.state);
+        console.log(current_users["1"]["player"].context.state);
     })
 })
