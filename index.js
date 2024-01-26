@@ -80,7 +80,11 @@ app.get('/api/get-user-url_song', async (req, res) => {
       console.error('Erro ao obter dados do banco:', error);
       res.status(500).json({ error: 'Erro interno no servidor' });
     }
-  });
+});
+
+app.post('/api/join-audio-mix'), async (req, res) => {
+ 
+}
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
