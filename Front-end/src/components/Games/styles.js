@@ -61,9 +61,10 @@ export const GamesWrapper = styled.div`
         flex-direction: column;
         align-items: center;
         gap:15px;
-        border-radius: 6px;
-        border: 8px solid var(--slate-900, #023059);
-        background: #FFF;
+
+        &:hover {
+            cursor: pointer;
+        }
 
         p {
             color: var(--slate-900, #023059);
