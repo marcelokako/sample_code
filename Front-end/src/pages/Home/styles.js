@@ -95,6 +95,8 @@ export const WrapperAvatar = styled.div`
     height: 260px;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    
 
 `;
 
@@ -110,6 +112,7 @@ export const Avatar = styled.div`
     background: #B9C1CA;
     flex-shrink: 0;
     
+    
 `;
 
 export const ContainerSetas = styled.div`
@@ -119,10 +122,9 @@ export const ContainerSetas = styled.div`
     flex-direction: row;
     align-items: end;
     justify-content: space-between;
-    z-index: 1;
     position: absolute;
-    top: 255px;
-
+    z-index: 1;
+    bottom: 25px;
 `;
 
 export const Seta = styled.img`
