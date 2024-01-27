@@ -2,13 +2,30 @@ import styled from 'styled-components';
 
 export const Conteiner = styled.div`
     display: flex;
-    width: 100%;
-    height: 100%;
-    flex-shrink: 0;
-    padding: 24px;
     flex-direction: column;
-    justify-content: center; /* Alterado de center para flex-start */
+    min-height: 100vh;
+    width: 100%; 
+    height: 100%;
     align-items: center;
+    justify-content: center;
+    max-height: 100vh;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+        height: 475px;
+        border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background: #024A59;
+    }
+        
+    &::-webkit-scrollbar-track {
+      background: white; // Fundo branco para a trilha da barra de rolagem
+      border-radius: 5px; // Bordas arredondadas para a trilha (opcional)
+    }
     
 
 `;
