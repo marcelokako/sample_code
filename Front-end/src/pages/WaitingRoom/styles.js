@@ -36,11 +36,11 @@ export const Conteiner = styled.div`
     gap: 10px;
     border: 1px solid #023059;
     border-radius: 6px;
-    font-family: Inter;
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
     line-height: 24px; 
+    cursor: pointer;
   }
 
     .refrao-game{

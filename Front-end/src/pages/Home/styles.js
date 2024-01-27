@@ -50,37 +50,18 @@ export const WrapperAction = styled.div`
   
 `;
 
-export const ButtonLogar = styled.button`
-    display: inline-flex;
-    padding: 8px 16px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    border-radius: 6px;
-    background: var(--slate-900, #023059);
-    color: #FFF;
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 24px; 
-    cursor: pointer;
-`;
 export const ButtonCadastrar = styled.button`
     display: inline-flex;
     padding: 8px 16px;
     justify-content: center;
     align-items: center;
     gap: 10px;
+    border: 1px solid #96ADC6;
     border-radius: 6px;
-    border: 1px solid var(--slate-200, #96ADC6);
-    background: var(--slate-50, #E6EBF1);
-    color: #0F172A;
-    font-family: Inter;
     font-size: 14px;
     font-style: normal;
-    font-weight: 500;
-    line-height: 24px;
+    font-weight: 600;
+    line-height: 24px; 
     cursor: pointer;
 `;
 
@@ -145,7 +126,6 @@ export const ConteinerText = styled.div`
 export const TitleH2 = styled.h2`
     color: var(--slate-900, #023059);
     /* h2 */
-    font-family: Inter;
     font-size: 30px;
     font-style: normal;
     font-weight: 600;
@@ -158,7 +138,6 @@ export const Subtle = styled.b`
     color: #033059;
 
     /* subtle-medium */
-    font-family: Inter;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -176,7 +155,6 @@ export const Input = styled.input`
     width: 100%;
     color: #0F172A;
 
-    font-family: Inter;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -191,18 +169,18 @@ export const ContainerButtonCriarSala = styled.div`
 
 `;
 export const ButtonCriarSala = styled.button`
-    display: flex;
+   display: inline-flex;
     padding: 8px 16px;
     justify-content: center;
     align-items: center;
     gap: 10px;
+    border: 1px solid #023059;
     border-radius: 6px;
     background: var(--slate-900, #023059);
     color: #FFF;
-    font-family: Inter;
     font-size: 14px;
     font-style: normal;
-    font-weight: 500;
-    line-height: 24px; /* 171.429% */
+    font-weight: 600;
+    line-height: 24px; 
     cursor: pointer;
 `;

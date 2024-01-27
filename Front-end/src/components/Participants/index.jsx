@@ -3,7 +3,9 @@ import * as S from './styles';
 import Avatar from './../../assets/avatar-cacti-cactus-svgrepo-com.svg'
 
 const Participants = () => {
-  console.log("333333333333333")
+
+  const username = localStorage.getItem('user') ?? 'undefined';
+
   return (
     <S.Conteiner>
       <S.TitleWrapper>
@@ -16,7 +18,7 @@ const Participants = () => {
           </S.Avatar>
           <S.WrapperPlayerInfo>
             <S.Player>
-              ABOBRINHA
+               {username}
             </S.Player>
             <S.typeOfPlayer>
               Host

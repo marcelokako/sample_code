@@ -19,7 +19,6 @@ export const Conteiner = styled.div`
 export const TitleWrapper = styled.div`
     display: flex;
     align-self: flex-start;
-    font-family: Inter;
     color: #024A59;
     font-size: 30px;
     font-style: normal;
@@ -69,7 +68,6 @@ export const WrapperPlayerInfo = styled.div`
 
 export const Player = styled.div`
     color: var(--slate-900, #023059);
-    font-family: Inter;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
@@ -78,7 +76,6 @@ export const Player = styled.div`
 
 export const typeOfPlayer = styled.div`
     color: #0F172A;
-    font-family: Inter;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

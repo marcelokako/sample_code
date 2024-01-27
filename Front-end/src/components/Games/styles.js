@@ -14,13 +14,11 @@ export const Conteiner = styled.div`
     border-radius: 8px;
     border: 1px solid #CBD5E1;
     background: rgba(255, 255, 255, 0.50);
-    font-family: 'Inter', sans-serif;
 `;
 
 export const TitleWrapper = styled.div`
     display: flex;
     align-self: flex-start;
-    font-family: Inter;
     color: #024A59;
     font-size: 30px;
     font-style: normal;

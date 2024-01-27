@@ -1,10 +1,17 @@
 import React, { memo } from "react";
+import { useNavigate } from 'react-router-dom';
 import GameConteiner  from "../../components/Games/index";
 import Participants  from "../../components/Participants/index";
 import logo from './../../assets/Logo-symphonIA.svg'
 import * as S from './styles';
 
 const WaitingRoom = () => {
+  const navigate = useNavigate();
+
+  const ButtonBackHome = () => {
+    localStorage.clear();
+    navigate('/');
+  };
   return (
     <S.Conteiner>
       <S.WrapperLogo>
@@ -12,7 +19,7 @@ const WaitingRoom = () => {
       </S.WrapperLogo>
       <S.WrapperMain>
         <>
-        <button className="button-position button-style">Voltar</button>
+        <button className="button-position button-style" onClick={ButtonBackHome}>Voltar</button>
           <Participants/>
           <GameConteiner/>
         </>

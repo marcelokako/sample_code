@@ -1,4 +1,5 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import * as S from './styles';
 import logo from './../../assets/Logo-symphonIA.svg'
 import SD from './../../assets/Seta-direita.svg'
@@ -7,9 +8,18 @@ import Avatar from './../../assets/avatar-cacti-cactus-svgrepo-com.svg'
 // import Icon from "./Icon.jsx"
 const Home = () => {
 
-  const ButtonCriarSala = () =>{
-    console.log('criar sala');
-  }
+  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const ButtonCriarSala = () => {
+    localStorage.setItem('user', username);
+    navigate('/waiting-room');
+  };
+
   const ButtonSetaDireita = () =>{
     console.log('seta direita');
   }
@@ -44,7 +54,7 @@ const Home = () => {
             <S.Subtle>
             Escolha seu username e seu avatar e comece a jogar!
             </S.Subtle>
-            <S.Input/>
+            <S.Input value={username} onChange={handleInputChange} />
             <S.ContainerButtonCriarSala>
               <S.ButtonCriarSala onClick={ButtonCriarSala}>
                 Criar Sala
@@ -59,9 +69,9 @@ const Home = () => {
       <S.WrapperAction>
 
         <a href="/waiting-room">
-        <S.ButtonLogar>
+        <S.ButtonCriarSala>
             Logar
-        </S.ButtonLogar>
+        </S.ButtonCriarSala>
         </a>
 
         <S.ButtonCadastrar>
