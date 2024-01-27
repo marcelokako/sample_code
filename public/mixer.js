@@ -4,7 +4,7 @@ $(document).ready(function() {
     get_user_url_song()
     function get_user_url_song(){
 
-        fetch('/api/get-user-url_song')
+        fetch(`/song/user/${1}`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Erro ao obter dados do banco');
