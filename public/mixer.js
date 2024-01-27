@@ -62,4 +62,8 @@ $(document).ready(function() {
     $("#check_context").on("click", function() {
         console.log(current_users["1"]["player"].context.state);
     })
+
+    // To-Do: Botão para pegar todos os parâmetros (pitch shift)
+
+
 })
