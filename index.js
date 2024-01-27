@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import Moises from "moises/sdk.js"
 import path from 'path';
 import pkg from 'pg';
+import fs from 'fs';
 
 const { Pool } = pkg;
 
@@ -43,7 +44,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/mixer', async (req, res) => {
-    // jobSeparaVozInstrumento(process.env.LOCAL_URL_CARELESS_WHISPER); // Trechos originais e só instrumentais seriam salvos em tabela trecho_base
+    jobSeparaVozInstrumento(process.env.LOCAL_URL_CARELESS_WHISPER); // Trechos originais e só instrumentais seriam salvos em tabela trecho_base
 
     try {
       // Atribuição de trecho base para cada player utilizando user ids (sessão) e quantidade de players
@@ -73,10 +74,6 @@ app.get('/song/user/:id', async (req, res) => {
       res.status(500).json({ error: 'Erro interno no servidor' });
     }
 });
-
-app.post('join-audio-mix'), async (req, res) => {
- 
-}
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
@@ -108,20 +105,74 @@ async function jobSeparaVozInstrumento (url) {
   const downloadUrl = await moises.uploadFile(url)
 
   const jobId = await moises.addJob(
-      `job-${obj_users_session[userIdTeste].userId}`,
+      `job-${Object.keys(obj_users_session)[0]}`,
       "wf-separacao-vocal-instrumento",
       { inputUrl: downloadUrl }
       )
       
+      console.log("Carregando...")
       const job = await moises.waitForJobCompletion(jobId)
-      
+
       if (job.status === "SUCCEEDED") {
-          console.log("Carregando...")
-          const files = await moises.downloadJobResults(job, `.public/stems/${obj_users_session[userIdTeste].userId}`)
+          const files = await moises.downloadJobResults(job, `public/stems/${Object.keys(obj_users_session)[0]}`)
           console.log("Resultado:", files)
       } else {
           console.log("Job falhou!")
       }
 
       await moises.deleteJob(jobId) 
+  }
+
+async function jobJoinAudioFiles (obj) {
+  const trecho_instrumental = await moises.uploadFile(obj.trecho_instrumental)
+  const user_resultado = await moises.uploadFile(obj.user_resultado)
+
+  const jobId = await moises.addJob(
+    `job-${Object.keys(obj_users_session)[0]}`,
+    "wf-separacao-vocal-instrumento",
+    { 
+      trecho_instrumental,
+      user_resultado/*,
+      pad_value: obj.pad_value, 
+      pitch_shift_value: obj.pitch_shift_value,
+      speed_value: obj.speed_value,
+      volume_value: obj.volume_value,
+      auto_tune_value: obj.auto_tune_value*/
+      // Todos estes settings comentados só são possíveis usar com o modo desenvolvedor habilitado
+    }
+  )
+      
+    console.log("Carregando...")
+    const job = await moises.waitForJobCompletion(jobId)
+
+    if (job.status === "SUCCEEDED") {
+        const files = await moises.downloadJobResults(job, `public/stems/${Object.keys(obj_users_session)[0]}`)
+        console.log("Resultado:", files)
+    } else {
+        console.log("Job falhou!")
+    }
+
+      await moises.deleteJob(jobId) 
+  }
+
+  app.post('/user/result'), async (req, res) => {
+    let user_id = req.params.user_id;
+    const vocal_timing_json = JSON.parse(fs.readFileSync(`public/stems/${user_id}/vocal_timing.json`, 'utf-8'));
+
+    obj_user_resultado = { 
+      trecho_instrumental: `public/stems/${user_id}/instrumental-isolado.wav`,
+      user_resultado: `public/stems/${user_id}/resultado_user_${user_id}.wav`,
+      pad_value: vocal_timing_json[0].start,
+      pitch_shift_value: req.params.pitch_shift_value,
+      speed_value: req.params.speed_value,
+      volume_value: req.params.volume_value,
+      auto_tune_value: req.params.auto_tune_value
+    }
+    try {
+      jobJoinAudioFiles(obj_user_resultado);
+    } catch (error) {
+      console.error('Erro ao juntar trechos:', error);
+      res.status(500).json({ error: 'Erro interno no servidor' });
+    }
+    res.sendFile(path.join(__dirname, 'public', 'resultado.html'));
   }
