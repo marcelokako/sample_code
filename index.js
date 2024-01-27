@@ -1,11 +1,17 @@
-import Moises from "moises/sdk.js"
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import express from 'express';
-import path from 'path';
 import dotenv from 'dotenv';
+import Moises from "moises/sdk.js"
+import path from 'path';
 import pkg from 'pg';
+
 const { Pool } = pkg;
 
 dotenv.config(); 
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename).replace(/\\/g, '/');
 
 const apiKey = process.env.API_KEY;
 const moises = new Moises({ apiKey })
@@ -25,71 +31,36 @@ const obj_users_session = {};
 const userIdTeste = 1;
 
 // Populando objeto com usuários da sessão
-obj_users_session[userIdTeste] = {"userId": userIdTeste};
+obj_users_session[userIdTeste] = {};
 
 // const apiUrlJob = `https://api.music.ai/api/job/${process.env.JOB_ID_SEP_VOCAL}`;
-
-// Function que separa a voz e instrumento. Primeiro add um Job para o Workflow "wf-separacao-vocal-instrumento", 
-// depois baixa o resultado para uma pasta local
-async function jobSeparaVozInstrumento (url) {
-    const downloadUrl = await moises.uploadFile(url)
-
-    const jobId = await moises.addJob(
-        `job-${obj_users_session[userIdTeste].userId}`,
-        "wf-separacao-vocal-instrumento",
-        { inputUrl: downloadUrl }
-        )
-        
-        const job = await moises.waitForJobCompletion(jobId)
-        
-        if (job.status === "SUCCEEDED") {
-            console.log("Carregando...")
-            const files = await moises.downloadJobResults(job, `.public/stems/${obj_users_session[userIdTeste].userId}`)
-            console.log("Resultado:", files)
-        } else {
-            console.log("Job falhou!")
-        }
-
-        await moises.deleteJob(jobId)
-        
-    }
 
 const app = express();
 app.use(express.static('public'));
 console.log("Iniciando...");
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
-
 });
 
 app.get('/mixer', async (req, res) => {
     // jobSeparaVozInstrumento(process.env.LOCAL_URL_CARELESS_WHISPER); // Trechos originais e só instrumentais seriam salvos em tabela trecho_base
 
-    // Atribuição de trecho base para cada player utilizando user ids (sessão) e quantidade de players
-    let player_count = 1;
-
     try {
-      const result_trecho = await pool.query(`SELECT trecho_base_pai_id FROM trecho_base WHERE file_type = 1 LIMIT ${player_count}`
-      ).then((res)=>{
+      // Atribuição de trecho base para cada player utilizando user ids (sessão) e quantidade de players
+      let player_count = Object.keys(obj_users_session).length;
 
-        console.log("result_trecho", res.rows);
-        const obj_trecho_base_ids = res.rows.map(row => row.trecho_base_pai_id);
-        console.log("obj_trecho_base_ids", obj_trecho_base_ids);
-        console.log("obj_users_session antes: ", obj_users_session);
-        let i=0;
-        obj_users_session.map(userid => {
-          obj_users_session[userid].trecho_base_id = obj_trecho_base_ids[i++];
-        })
-        console.log("obj_users_session dps: ", obj_users_session);
-        //link_song_user(obj_trecho_base_ids)
-      })
-        
-        
+      await pool.query(`SELECT trecho_base_pai_id FROM trecho_base WHERE file_type = 1 LIMIT ${player_count}`
+      ).then((response)=>{
+        const arr_trecho_base_ids = response.rows.map(row => row.trecho_base_pai_id);
+        Object.keys(obj_users_session).forEach((key, index) => {
+          obj_users_session[key].trecho_id = arr_trecho_base_ids[index];
+        });
+          link_song_user(obj_users_session)
+      });
     } catch (error) {
       console.error('Erro ao atribuir trechos:', error);
       res.status(500).json({ error: 'Erro interno no servidor' });
     }
-
     res.sendFile(path.join(__dirname, 'public', 'mixer.html'));
 });
 
@@ -107,17 +78,24 @@ app.post('join-audio-mix'), async (req, res) => {
  
 }
 
-app.post('/user'), async (req, res) => {
- 
-}
-
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
 
-async function link_song_user(dados) {
+async function link_song_user(obj_users_session) {
   try {
-      // Realize a inserção na tabela desejada usando os dados obtidos
+    // { '1': { trecho_id: '1' } }
+    // Object.keys(obj_users_session).forEach((key, index) => {
+    //   obj_users_session[key].trecho_id = arr_trecho_base_ids[index];
+    // });
+    let query = "INSERT INTO users (userid, trecho_base_pai_id, roomid, hostid, sessionstatus) VALUES ";
+    Object.keys(obj_users_session).forEach((key, index) => {
+      query += `(${obj_users_session[key]}, 
+                ${obj_users_session[key].trecho_id}, 
+                12345, 
+                ${obj_users_session[Object.keys(obj_users_session)[0]]}, 
+                ACTIVE),`;
+    });
       const resultInsercao = await pool.query('INSERT INTO sua_tabela (coluna1, coluna2, coluna3) VALUES ($1, $2, $3)', [dados.valor1, dados.valor2, dados.valor3]);
 
       return { success: true, message: 'Dados inseridos com sucesso!' };
@@ -126,3 +104,28 @@ async function link_song_user(dados) {
       return { success: false, error: 'Erro interno no servidor' };
   }
 }
+
+// Function que separa a voz e instrumento. Primeiro add um Job para o Workflow "wf-separacao-vocal-instrumento", 
+// depois baixa o resultado para uma pasta local
+async function jobSeparaVozInstrumento (url) {
+  const downloadUrl = await moises.uploadFile(url)
+
+  const jobId = await moises.addJob(
+      `job-${obj_users_session[userIdTeste].userId}`,
+      "wf-separacao-vocal-instrumento",
+      { inputUrl: downloadUrl }
+      )
+      
+      const job = await moises.waitForJobCompletion(jobId)
+      
+      if (job.status === "SUCCEEDED") {
+          console.log("Carregando...")
+          const files = await moises.downloadJobResults(job, `.public/stems/${obj_users_session[userIdTeste].userId}`)
+          console.log("Resultado:", files)
+      } else {
+          console.log("Job falhou!")
+      }
+
+      await moises.deleteJob(jobId)
+      
+  }

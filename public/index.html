@@ -21,9 +21,16 @@
     <div>
         <button id="btn_mixer">Mixer</button>
         <script>
-            $('#btn_mixer').on('click', function() {
+            $('#btn_mixer').on('click', async function(res) {
                 try {
-                    fetch('/mixer');  
+                    const response = await fetch('/mixer');
+                    
+                    if (response.ok) {
+                        //window.location.href = '/mixer.html';
+                        console.log(response);
+                    } else {
+                        console.error('Erro na requisição:', response.status);
+                    }
                 } catch (error) {
                     console.error('Erro na requisição:', error);
                 }
