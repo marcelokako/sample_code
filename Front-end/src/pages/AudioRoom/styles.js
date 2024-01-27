@@ -78,7 +78,7 @@ export const WrapperLogo = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-top: 53.19px;
+    margin-top: 7.19px;
 
     @media (max-width: 1439px) {
         display: none;
@@ -159,6 +159,5 @@ export const ConteinerTema = styled.div`
     box-shadow: 0px 4px 4px 0px rgba(174, 174, 174, 0.25);
 
 `;
-
 
 

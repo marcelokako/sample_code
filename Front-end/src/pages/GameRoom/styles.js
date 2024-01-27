@@ -194,5 +194,3 @@ export const DivEnviar = styled.div`
     align-items: flex-end;
     gap: 8px;
   `;
-
-

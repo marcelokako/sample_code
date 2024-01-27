@@ -16,10 +16,6 @@ const AudioRoom = () => {
       </S.WrapperLogo>
 
       <S.WrapperMain>
-
-        <h2>
-          Temporizador
-        </h2>
       
       <S.WrapperAction>
         <S.ConteinerInf>
