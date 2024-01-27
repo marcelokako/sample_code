@@ -80,7 +80,17 @@ export const WrapperMain = styled.div`
   }
 `;
 export const WrapperAction = styled.div`
-  
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 45px;
+  margin-bottom: 90px;
+
+  @media (max-width: 1439px) {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 `;
 
   
