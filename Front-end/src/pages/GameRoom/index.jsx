@@ -34,9 +34,6 @@ const GameRoom = () => {
       </S.WrapperLogo>
 
       <S.WrapperMain>
-        <h2>
-          Temporizador
-        </h2>
         <div className="div-main">
           <S.WrapperAction>
             <S.ConteinerInf>

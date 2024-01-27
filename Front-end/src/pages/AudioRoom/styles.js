@@ -78,7 +78,7 @@ export const WrapperLogo = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-top: 53.19px;
+    margin-top: 7.19px;
 
     @media (max-width: 1439px) {
         display: none;
