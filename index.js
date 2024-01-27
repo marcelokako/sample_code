@@ -82,6 +82,7 @@ app.get('/api/get-user-url_song', async (req, res) => {
     }
 });
 
+// To-Do job para juntar áudio, 
 app.post('/api/join-audio-mix'), async (req, res) => {
  
 }
