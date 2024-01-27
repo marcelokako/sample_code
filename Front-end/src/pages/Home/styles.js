@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 export const Conteiner = styled.div`
     display: flex;
-    width: 1441px;
+    width: 100%;
     height: 100%;
     flex-shrink: 0;
     padding: 24px;
     flex-direction: column;
-    justify-content: start; /* Alterado de center para flex-start */
+    justify-content: center; /* Alterado de center para flex-start */
     align-items: center;
     
 
@@ -15,7 +15,7 @@ export const Conteiner = styled.div`
 
 export const WrapperLogo = styled.div`
     
-   width: 903px;
+    width: 903px;
     height: 162px;
     flex-shrink: 0;
      
@@ -64,6 +64,7 @@ export const ButtonLogar = styled.button`
     font-style: normal;
     font-weight: 500;
     line-height: 24px; 
+    cursor: pointer;
 `;
 export const ButtonCadastrar = styled.button`
     display: inline-flex;
@@ -80,6 +81,7 @@ export const ButtonCadastrar = styled.button`
     font-style: normal;
     font-weight: 500;
     line-height: 24px;
+    cursor: pointer;
 `;
 
 export const WrapperUser = styled.div`
@@ -92,13 +94,46 @@ export const WrapperUser = styled.div`
 export const WrapperAvatar = styled.div`
     display: flex;
     width: 260px;
+    height: 260px;
+    flex-direction: column;
+    align-items: center;
+
+`;
+
+export const Avatar = styled.div`
+    display: flex;
+    width: 260px;
+    height: 260px;
     padding: 8.813px 24.445px 0px 24.45px;
     justify-content: center;
     align-items: center;
     border-radius: 100000000px;
     border: 5px solid #033059;
     background: #B9C1CA;
+    flex-shrink: 0;
+    
 `;
+
+export const ContainerSetas = styled.div`
+    width: 260px;
+    height: 260px;
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: space-between;
+    z-index: 1;
+    position: absolute;
+    top: 255px;
+
+`;
+
+export const Seta = styled.img`
+    cursor: pointer;
+    width: 46.667px;
+    height: 46.667px;
+    flex-shrink: 0;
+`;
+
 
 export const ConteinerText = styled.div`
     display: flex;
@@ -118,7 +153,7 @@ export const TitleH2 = styled.h2`
     letter-spacing: -0.225px;
 `;
 
-export const subtle = styled.div`
+export const Subtle = styled.b`
     width: 377px;
     color: #033059;
 
@@ -149,23 +184,25 @@ export const Input = styled.input`
 `;
 export const ContainerButtonCriarSala = styled.div`
     display: flex;
-width: 377px;
-justify-content: flex-end;
-align-items: center;
-gap: 8px;
+    width: 377px;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+
 `;
 export const ButtonCriarSala = styled.button`
     display: flex;
-padding: 8px 16px;
-justify-content: center;
-align-items: center;
-gap: 10px;
-border-radius: 6px;
-background: var(--slate-900, #023059);
-color: #FFF;
-font-family: Inter;
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: 24px; /* 171.429% */
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 6px;
+    background: var(--slate-900, #023059);
+    color: #FFF;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 171.429% */
+    cursor: pointer;
 `;
