@@ -4,7 +4,6 @@ import Home from './pages/Home/index';
 import  WaitingRoom  from './pages/WaitingRoom/index' 
 
 function App() {
-  console.log("chamou")
   return (
     <Router>
       <Routes>
