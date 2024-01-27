@@ -195,4 +195,3 @@ export const DivEnviar = styled.div`
     gap: 8px;
   `;
 
-
