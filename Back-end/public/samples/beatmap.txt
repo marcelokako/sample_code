@@ -1,0 +1,54 @@
+[
+{"start": 10.74, "end": 37.69, 
+"chord_majmin": "N", 
+"chord_complex_jazz": "N", 
+"chord_simple_jazz": "N", 
+"chord_complex_pop": "N", 
+"chord_simple_pop": "N", 
+"bass": null}]
+
+[
+{"time": 10.74, "beatNum": 3},
+ {"time": 11.53, "beatNum": 4},
+
+ {"time": 12.34, "beatNum": 1},
+ {"time": 13.14, "beatNum": 2},
+ {"time": 13.92, "beatNum": 3},
+ {"time": 14.73, "beatNum": 4},
+
+ {"time": 15.48, "beatNum": 1},
+ {"time": 16.3, "beatNum": 2},
+ {"time": 17.06, "beatNum": 3},
+ {"time": 17.85, "beatNum": 4},
+
+ {"time": 18.66, "beatNum": 1},
+ {"time": 19.43, "beatNum": 2},
+ {"time": 20.23, "beatNum": 3},
+ {"time": 21.03, "beatNum": 4},
+
+ {"time": 21.81, "beatNum": 1},
+ {"time": 22.63, "beatNum": 2},
+ {"time": 23.39, "beatNum": 3},
+ {"time": 24.21, "beatNum": 4},
+
+ {"time": 24.99, "beatNum": 1},
+ {"time": 25.76, "beatNum": 2},
+ {"time": 26.55, "beatNum": 3},
+ {"time": 27.36, "beatNum": 4}, 
+
+{"time": 28.13, "beatNum": 1},
+ {"time": 28.95, "beatNum": 2},
+ {"time": 29.74, "beatNum": 3}, 
+{"time": 30.51, "beatNum": 4}, 
+
+{"time": 31.3, "beatNum": 1}, 
+{"time": 32.12, "beatNum": 2},
+ {"time": 32.95, "beatNum": 3},
+ {"time": 33.76, "beatNum": 4},
+
+ {"time": 34.53, "beatNum": 1},
+ {"time": 35.33, "beatNum": 2},
+ {"time": 36.11, "beatNum": 3},
+ {"time": 36.89, "beatNum": 4},
+
+ {"time": 37.69, "beatNum": 1}]
