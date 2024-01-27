@@ -38,13 +38,14 @@ obj_users_session[userIdTeste] = {};
 
 const app = express();
 app.use(express.static('public'));
+app.use(express.json());
 console.log("Iniciando...");
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.get('/mixer', async (req, res) => {
-    jobSeparaVozInstrumento(process.env.LOCAL_URL_CARELESS_WHISPER); // Trechos originais e só instrumentais seriam salvos em tabela trecho_base
+    // jobSeparaVozInstrumento(process.env.LOCAL_URL_CARELESS_WHISPER); // Trechos originais e só instrumentais seriam salvos em tabela trecho_base
 
     try {
       // Atribuição de trecho base para cada player utilizando user ids (sessão) e quantidade de players
@@ -90,7 +91,7 @@ async function link_song_user(obj_users_session) {
                 ${Object.keys(obj_users_session)[0]}, 
                 'ACTIVE')`;
     });
-    // const resultInsercao = await pool.query(sql);
+    const resultInsercao = await pool.query(sql);
 
     return { success: true, message: 'Dados inseridos com sucesso!' };
   } catch (error) {
@@ -129,7 +130,7 @@ async function jobJoinAudioFiles (obj) {
 
   const jobId = await moises.addJob(
     `job-${Object.keys(obj_users_session)[0]}`,
-    "wf-separacao-vocal-instrumento",
+    "wf-join-audio-mix",
     { 
       trecho_instrumental,
       user_resultado/*,
@@ -155,24 +156,24 @@ async function jobJoinAudioFiles (obj) {
       await moises.deleteJob(jobId) 
   }
 
-  app.post('/user/result'), async (req, res) => {
-    let user_id = req.params.user_id;
-    const vocal_timing_json = JSON.parse(fs.readFileSync(`public/stems/${user_id}/vocal_timing.json`, 'utf-8'));
+  app.post('/user/result', async (req, res) => {
+    let user_id = req.body.user_id;
+    const vocal_timing_json = JSON.parse(fs.readFileSync(`public/stems/${user_id}/vocal-timing.json`, 'utf-8'));
 
-    obj_user_resultado = { 
+    let obj_user_resultado = { 
       trecho_instrumental: `public/stems/${user_id}/instrumental-isolado.wav`,
       user_resultado: `public/stems/${user_id}/resultado_user_${user_id}.wav`,
       pad_value: vocal_timing_json[0].start,
-      pitch_shift_value: req.params.pitch_shift_value,
-      speed_value: req.params.speed_value,
-      volume_value: req.params.volume_value,
-      auto_tune_value: req.params.auto_tune_value
+      pitch_shift_value: req.body.pitch_shift_value,
+      speed_value: req.body.speed_value,
+      volume_value: req.body.volume_value,
+      auto_tune_value: req.body.auto_tune_value
     }
     try {
-      jobJoinAudioFiles(obj_user_resultado);
+      // await jobJoinAudioFiles(obj_user_resultado);
     } catch (error) {
       console.error('Erro ao juntar trechos:', error);
       res.status(500).json({ error: 'Erro interno no servidor' });
     }
-    res.sendFile(path.join(__dirname, 'public', 'resultado.html'));
-  }
+    res.sendFile(path.join(__dirname, 'public', 'result.html'));
+  })

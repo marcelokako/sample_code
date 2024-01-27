@@ -14,16 +14,18 @@ $(document).ready(function() {
         .then(data => {
             console.log('Dados recebidos:', data);
 
-            const player = new Tone.Player(`stems/${data[0].userid}/vocal-isolado.wav`);
-
-            const pitch_shift = new Tone.PitchShift({
-                pitch: 0
-            }).toDestination();
-
-            current_users[data[0].userid] = {
-                "player": player,
-                "pitch_shift": pitch_shift
-            }
+            data.map((r)=>{
+                const player = new Tone.Player(`stems/${r.userid}/resultado_user_1.wav`);
+    
+                const pitch_shift = new Tone.PitchShift({
+                    pitch: 0
+                }).toDestination();
+    
+                current_users[r.userid] = {
+                    "player": player,
+                    "pitch_shift": pitch_shift
+                }
+            })
 
         })
         .catch(error => {
@@ -61,9 +63,30 @@ $(document).ready(function() {
 
     $("#check_context").on("click", function() {
         console.log(current_users["1"]["player"].context.state);
+        send_user_result(Object.keys(current_users)[0]);
     })
 
-    // To-Do: Botão para pegar todos os parâmetros (pitch shift)
-
-
+    async function send_user_result(user_id){
+        obj_resultado = {
+            user_id,
+            pitch_shift_value: "",
+            speed_value: "",
+            auto_tune_value: "",
+            volume_value: "",
+        }
+        await fetch(`/user/result`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(obj_resultado)
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Erro enviar arquivos para juntar');
+          }
+          window.location.href = '/result.html';//redirect
+        })
+        .catch(error => {
+          console.error('Erro:', error.message);
+        });
+    }
 })
