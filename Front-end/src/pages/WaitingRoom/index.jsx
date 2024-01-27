@@ -12,6 +12,10 @@ const WaitingRoom = () => {
     localStorage.clear();
     navigate('/');
   };
+  const ButtonComeca = () => {
+    navigate('/game-room');
+  };
+
   return (
     <S.Conteiner>
       <S.WrapperLogo>
@@ -25,7 +29,7 @@ const WaitingRoom = () => {
         </>
       </S.WrapperMain>
       <S.WrapperAction>
-        <button className="button-style" style={{background: '#F2B705', color: ''}}>Começar!</button>
+        <button className="button-style" style={{background: '#F2B705', color: ''}} onClick={ButtonComeca}>Começar!</button>
         <button className="button-style">Convidar Amigos</button>
       </S.WrapperAction>
     </S.Conteiner>
