@@ -55,8 +55,8 @@ app.get('/mixer', async (req, res) => {
         Object.keys(obj_users_session).forEach((key, index) => {
           obj_users_session[key].trecho_id = arr_trecho_base_ids[index];
         });
-          link_song_user(obj_users_session)
       });
+      // link_song_user(obj_users_session); atribui musica aos usuários da sessão
     } catch (error) {
       console.error('Erro ao atribuir trechos:', error);
       res.status(500).json({ error: 'Erro interno no servidor' });
@@ -66,7 +66,7 @@ app.get('/mixer', async (req, res) => {
 
 app.get('/song/user/:id', async (req, res) => {
     try {
-      const result = await pool.query(`SELECT userid, trecho_base_pai_id FROM users WHERE userid = ${req.params.id}`);
+      const result = await pool.query(`SELECT userid, trecho_base_pai_id, roomid FROM users WHERE userid = ${req.params.id}`);
       res.json(result.rows);
     } catch (error) {
       console.error('Erro ao obter dados do banco:', error);
@@ -83,23 +83,22 @@ app.listen(port, () => {
 });
 
 async function link_song_user(obj_users_session) {
-  console.log("entrou aq");
   try {
     let sql = "";
     Object.keys(obj_users_session).forEach((key, index) => {
       sql += `INSERT INTO users (userid, trecho_base_pai_id, roomid, hostid, sessionstatus) VALUES 
-                (${obj_users_session[key]}, 
+                (${key}, 
                 ${obj_users_session[key].trecho_id}, 
                 '12345', 
-                ${obj_users_session[Object.keys(obj_users_session)[0]]}, 
-                'ACTIVE'),`;
+                ${Object.keys(obj_users_session)[0]}, 
+                'ACTIVE')`;
     });
-      const resultInsercao = await pool.query(sql);
+    // const resultInsercao = await pool.query(sql);
 
-      return { success: true, message: 'Dados inseridos com sucesso!' };
+    return { success: true, message: 'Dados inseridos com sucesso!' };
   } catch (error) {
-      console.error('Erro ao inserir dados:', error);
-      return { success: false, error: 'Erro interno no servidor' };
+    console.error('Erro ao inserir dados:', error);
+    return { success: false, error: 'Erro interno no servidor' };
   }
 }
 
@@ -124,6 +123,5 @@ async function jobSeparaVozInstrumento (url) {
           console.log("Job falhou!")
       }
 
-      await moises.deleteJob(jobId)
-      
+      await moises.deleteJob(jobId) 
   }
