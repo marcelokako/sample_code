@@ -170,24 +170,24 @@ async function jobJoinAudioFiles (obj) {
       await moises.deleteJob(jobId) 
   }
 
-  app.post('/user/result', async (req, res) => {
-    let user_id = req.body.user_id;
-    const vocal_timing_json = JSON.parse(fs.readFileSync(`public/stems/${user_id}/vocal-timing.json`, 'utf-8'));
+app.post('/user/result', async (req, res) => {
+  let user_id = req.body.user_id;
+  const vocal_timing_json = JSON.parse(fs.readFileSync(`public/stems/${user_id}/vocal-timing.json`, 'utf-8'));
 
-    let obj_user_resultado = { 
-      trecho_instrumental: `public/stems/${user_id}/instrumental-isolado.wav`,
-      user_resultado: `public/stems/${user_id}/resultado_user_${user_id}.wav`,
-      pad_value: vocal_timing_json[0].start,
-      pitch_shift_value: req.body.pitch_shift_value,
-      speed_value: req.body.speed_value,
-      volume_value: req.body.volume_value,
-      auto_tune_value: req.body.auto_tune_value
-    }
-    try {
-      // await jobJoinAudioFiles(obj_user_resultado);
-    } catch (error) {
-      console.error('Erro ao juntar trechos:', error);
-      res.status(500).json({ error: 'Erro interno no servidor' });
-    }
-    res.sendFile(path.join(__dirname, 'public', 'result.html'));
-  })
+  let obj_user_resultado = { 
+    trecho_instrumental: `public/stems/${user_id}/instrumental-isolado.wav`,
+    user_resultado: `public/stems/${user_id}/resultado_user_${user_id}.wav`,
+    pad_value: vocal_timing_json[0].start,
+    pitch_shift_value: req.body.pitch_shift_value,
+    speed_value: req.body.speed_value,
+    volume_value: req.body.volume_value,
+    auto_tune_value: req.body.auto_tune_value
+  }
+  try {
+    // await jobJoinAudioFiles(obj_user_resultado);
+  } catch (error) {
+    console.error('Erro ao juntar trechos:', error);
+    res.status(500).json({ error: 'Erro interno no servidor' });
+  }
+  res.sendFile(path.join(__dirname, 'public', 'result.html'));
+})
