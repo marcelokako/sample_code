@@ -83,20 +83,18 @@ app.listen(port, () => {
 });
 
 async function link_song_user(obj_users_session) {
+  console.log("entrou aq");
   try {
-    // { '1': { trecho_id: '1' } }
-    // Object.keys(obj_users_session).forEach((key, index) => {
-    //   obj_users_session[key].trecho_id = arr_trecho_base_ids[index];
-    // });
-    let query = "INSERT INTO users (userid, trecho_base_pai_id, roomid, hostid, sessionstatus) VALUES ";
+    let sql = "";
     Object.keys(obj_users_session).forEach((key, index) => {
-      query += `(${obj_users_session[key]}, 
+      sql += `INSERT INTO users (userid, trecho_base_pai_id, roomid, hostid, sessionstatus) VALUES 
+                (${obj_users_session[key]}, 
                 ${obj_users_session[key].trecho_id}, 
-                12345, 
+                '12345', 
                 ${obj_users_session[Object.keys(obj_users_session)[0]]}, 
-                ACTIVE),`;
+                'ACTIVE'),`;
     });
-      const resultInsercao = await pool.query('INSERT INTO sua_tabela (coluna1, coluna2, coluna3) VALUES ($1, $2, $3)', [dados.valor1, dados.valor2, dados.valor3]);
+      const resultInsercao = await pool.query(sql);
 
       return { success: true, message: 'Dados inseridos com sucesso!' };
   } catch (error) {
