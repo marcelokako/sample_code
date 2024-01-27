@@ -127,9 +127,9 @@ async function jobSeparaVozInstrumento (url) {
 async function jobJoinAudioFiles (obj) {
   const trecho_instrumental = await moises.uploadFile(obj.trecho_instrumental)
   const user_resultado = await moises.uploadFile(obj.user_resultado)
-
+  const user_index_homologacao = 0;
   const jobId = await moises.addJob(
-    `job-${Object.keys(obj_users_session)[0]}`,
+    `job-${Object.keys(obj_users_session)[user_index_homologacao]}`,
     "wf-join-audio-mix",
     { 
       trecho_instrumental,
@@ -147,8 +147,22 @@ async function jobJoinAudioFiles (obj) {
     const job = await moises.waitForJobCompletion(jobId)
 
     if (job.status === "SUCCEEDED") {
-        const files = await moises.downloadJobResults(job, `public/stems/${Object.keys(obj_users_session)[0]}`)
-        console.log("Resultado:", files)
+        const files = await moises.downloadJobResults(job, `public/stems/${Object.keys(obj_users_session)[user_index_homologacao]}`)
+        //console.log("Resultado:", files)
+        try {
+            sql = `INSERT INTO trecho_base (trecho_base_pai_id, file_name, file_url, file_type) VALUES 
+                      (${obj_users_session[user_index_homologacao].trecho_id}, 
+                      'joined_user_result.wav', 
+                      ${files}, 
+                      3)`;
+
+          const resultInsercao = await pool.query(sql);
+      
+          return { success: true, message: 'Dados inseridos com sucesso!' };
+        } catch (error) {
+          console.error('Erro ao inserir dados:', error);
+          return { success: false, error: 'Erro interno no servidor' };
+        }
     } else {
         console.log("Job falhou!")
     }
