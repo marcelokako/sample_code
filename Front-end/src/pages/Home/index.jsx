@@ -8,16 +8,22 @@ import Avatar from './../../assets/avatar-cacti-cactus-svgrepo-com.svg'
 // import Icon from "./Icon.jsx"
 const Home = () => {
 
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(null);
+  const [ placeholderText, setPlaceholder]= useState("");
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setUsername(e.target.value);
   };
-
   const ButtonCriarSala = () => {
-    localStorage.setItem('user', username);
-    navigate('/waiting-room');
+    if (username && username.trim() !== "") {
+      localStorage.setItem('user', username.trim());
+      setTimeout(() => {
+        navigate('/waiting-room');
+      }, 500);
+    } else {
+      setPlaceholder("Nome de usuário está vazio");
+    }
   };
 
   const ButtonSetaDireita = () =>{
@@ -54,7 +60,7 @@ const Home = () => {
             <S.Subtle>
             Escolha seu username e seu avatar e comece a jogar!
             </S.Subtle>
-            <S.Input value={username} onChange={handleInputChange} />
+            <S.Input value={username} onChange={handleInputChange} placeholder={placeholderText} />
             <S.ContainerButtonCriarSala>
               <S.ButtonCriarSala onClick={ButtonCriarSala}>
                 Criar Sala
@@ -68,11 +74,10 @@ const Home = () => {
 
       <S.WrapperAction>
 
-        <a href="/waiting-room">
-        <S.ButtonCriarSala>
+        <S.ButtonCriarSala >
             Logar
         </S.ButtonCriarSala>
-        </a>
+    
 
         <S.ButtonCadastrar>
           Cadastre-se

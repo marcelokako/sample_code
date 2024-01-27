@@ -159,6 +159,11 @@ export const Input = styled.input`
     font-style: normal;
     font-weight: 400;
     line-height: 20px; /* 142.857% */
+
+    &:focus {
+        border: 1px solid #CBD5E1; // Mantém a mesma borda ao focar
+        outline: none; // Remove qualquer contorno de foco adicional
+    }
 `;
 export const ContainerButtonCriarSala = styled.div`
     display: flex;
