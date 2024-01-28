@@ -34,7 +34,7 @@ const userIdTeste = 1;
 // Populando objeto com usuários da sessão
 obj_users_session[userIdTeste] = {};
 
-// const apiUrlJob = `https://api.music.ai/api/job/${process.env.JOB_ID_SEP_VOCAL}`;
+ const apiUrlJob = `https://api.music.ai/api/job/${process.env.JOB_ID_SEP_VOCAL}`;
 
 const app = express();
 app.use(express.static('public'));
@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/mixer', async (req, res) => {
-    // jobSeparaVozInstrumento(process.env.LOCAL_URL_CARELESS_WHISPER); // Trechos originais e só instrumentais seriam salvos em tabela trecho_base
+     jobSeparaVozInstrumento(process.env.LOCAL_URL_CARELESS_WHISPER); // Trechos originais e só instrumentais seriam salvos em tabela trecho_base
 
     try {
       // Atribuição de trecho base para cada player utilizando user ids (sessão) e quantidade de players
@@ -58,7 +58,7 @@ app.get('/mixer', async (req, res) => {
           obj_users_session[key].trecho_id = arr_trecho_base_ids[index];
         });
       });
-      // link_song_user(obj_users_session); atribui musica aos usuários da sessão
+      link_song_user(obj_users_session); atribui musica aos usuários da sessão
     } catch (error) {
       console.error('Erro ao atribuir trechos:', error);
       res.status(500).json({ error: 'Erro interno no servidor' });
@@ -185,7 +185,7 @@ app.post('/user/result', async (req, res) => {
     auto_tune_value: req.body.auto_tune_value
   }
   try {
-    // await jobJoinAudioFiles(obj_user_resultado);
+    await jobJoinAudioFiles(obj_user_resultado);
   } catch (error) {
     console.error('Erro ao juntar trechos:', error);
     res.status(500).json({ error: 'Erro interno no servidor' });
