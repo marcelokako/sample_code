@@ -24,7 +24,26 @@ const Closure = () => {
       <S.WrapperMain>
         <Participants/>
         <S.ResultConteiner>
-            
+            <S.TileWrapper>Resultado</S.TileWrapper>
+            <S.ThemeWrapper>
+                <S.User>
+                    Abobrinha
+                </S.User>
+                <S.Theme>
+                    Tá muito calor!!!!
+                </S.Theme>
+            </S.ThemeWrapper>
+            <S.AudioWrapper>
+                <S.User>
+                    Abobrinha
+                </S.User>
+                <S.Audio>
+                <img src="/play-circle.svg" alt="mesinha de dj" style={{ width: '53px', height: '53px'}}/>
+                <img src="/pause.svg" alt="mesinha de dj"  style={{ width: '53px', height: '53px'}}/>
+                <img src="/progress.svg" alt="mesinha de dj"  style={{ width: '414px', height: '16px'}}/>
+                </S.Audio>
+            </S.AudioWrapper>
+
         </S.ResultConteiner>
       </S.WrapperMain>
       <S.WrapperAction>
