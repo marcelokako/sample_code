@@ -14,7 +14,7 @@ const GameRoomAudioMix = () => {
   const navigate = useNavigate();
 
   const next = () => {
-    navigate('/game-room');
+    navigate("/closure-room");
   };
 
   const startPlayback = async () => {
