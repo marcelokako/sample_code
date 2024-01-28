@@ -5,6 +5,7 @@ import  WaitingRoom  from './pages/WaitingRoom/index'
 import  GameRoom  from './pages/GameRoom/index' 
 import  AudioRoom  from './pages/AudioRoom/index' 
 import  GameRoomAudioMix  from './pages/GameRoomAudioMix/index'
+import  Closure  from './pages/Closure/index'
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/game-room" element={<GameRoom />} /> 
         <Route path="/audio-room" element={<AudioRoom />} /> 
         <Route path="/audio-mixer-room" element={<GameRoomAudioMix />} />
+        <Route path="/closure-room" element={<Closure />} />
       </Routes>
     </Router>
   );
