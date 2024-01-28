@@ -4,11 +4,12 @@ import * as S from './styles';
 import logo from './../../assets/Logo-symphonIA.svg'
 import autofalante from './../../assets/autofalante.svg'
 import styled from "styled-components";
+import AudioPlayer from "../../components/AudioPlayer/index"
 
 const GameRoom = () => {
-
+  const audioUrl = '/instrumental-isolado.wav';
   const [tema, setTema] = useState(null);
-  const [ placeholderText, setPlaceholder]= useState("");
+  const [ placeholderText, setPlaceholder]= useState("Ex: Cortar cebola");
   const navigate = useNavigate();
   
 
@@ -24,6 +25,7 @@ const GameRoom = () => {
     } else {
       setPlaceholder("Tema está vazio");
     }
+
   };
   
     return (
@@ -40,7 +42,9 @@ const GameRoom = () => {
             Ouça a música e imagine um tema para ela!
             </S.ConteinerInf>
             <S.ConteinerPlayer>
-                Player
+              
+                <AudioPlayer audioURL={audioUrl}></AudioPlayer>
+              
             </S.ConteinerPlayer>
             <S.DivEnviar>
 

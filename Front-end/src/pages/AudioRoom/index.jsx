@@ -3,10 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import * as S from '../AudioRoom/styles';
 import logo from './../../assets/Logo-symphonIA.svg'
 import styled from "styled-components";
+import AudioPlayer from "../../components/AudioPlayer/index"
 
 const AudioRoom = () => {
-
+  const audioUrl = '/joined_user_result.wav';
+  const navigate = useNavigate();
   const tema = localStorage.getItem('tema').toLocaleUpperCase() ?? 'undefined';
+
+  const [animate, setAnimate] = useState(false);
+
+  const handleClick = () => {
+    setAnimate(true);
+  };
+
   
     return (
       <S.Conteiner>
@@ -34,7 +43,7 @@ const AudioRoom = () => {
           </p>
         </S.ConteinerInf>
         <S.ConteinerPlayer>
-          player
+        <AudioPlayer audioURL={audioUrl}></AudioPlayer>
         </S.ConteinerPlayer>
         <div className="div-inf-next"> 
         <p className="p-inf-next">
@@ -46,7 +55,7 @@ const AudioRoom = () => {
       </S.WrapperAction>
 
       </S.WrapperMain>
-
+      <button onClick={()=>navigate('/audio-mixer-room')} className="btn-proximo">Próximo</button>
 
       </S.Conteiner>
     );
