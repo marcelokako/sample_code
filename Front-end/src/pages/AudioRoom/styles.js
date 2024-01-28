@@ -70,6 +70,26 @@ export const Conteiner = styled.div`
         line-height: 33px; /* 137.5% */
     }
 
+    .btn-proximo{
+        display: inline-flex;
+        padding: 8px 16px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        border-radius: 6px;
+        background: var(--amber-900, #F2B705);
+        color: #033059;
+
+        /* large */
+        font-family: Inter;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 28px; /* 155.556% */
+        margin-top: 14.91px;
+
+            }
+
 `;
 
 export const WrapperLogo = styled.div`
@@ -138,7 +158,7 @@ export const ConteinerPlayer = styled.div`
     width: 610px;
     height: 92px;
     padding: 17px;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     gap: 16px;
     flex-shrink: 0;
@@ -158,6 +178,19 @@ export const ConteinerTema = styled.div`
     background: var(--amber-900, #F2B705);
     box-shadow: 0px 4px 4px 0px rgba(174, 174, 174, 0.25);
 
+`;
+export const AudioPlayer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  gap: 16px;
+  margin-top:10px;
+
+  img{
+    &:hover {
+      cursor: pointer;
+     }
+  }
 `;
 
 

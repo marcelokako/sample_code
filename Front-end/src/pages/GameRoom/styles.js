@@ -39,8 +39,8 @@ export const Conteiner = styled.div`
         align-items: center;
         
     }
-    
 
+   
 `;
 
 export const WrapperLogo = styled.div`
@@ -116,12 +116,14 @@ export const Input = styled.input`
     border: 1px solid #CBD5E1;
     background: #FFF;
     width: 100%;
-    color: #0F172A;
-
-    font-size: 14px;
+    color: var(--slate-400, #4B749F);
+    /* h4 */
+    font-family: Inter;
+    font-size: 20px;
     font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    font-weight: 600;
+    line-height: 28px; /* 140% */
+    letter-spacing: -0.1px;
 
     &:focus {
         border: 1px solid #CBD5E1; // Mantém a mesma borda ao focar
@@ -176,7 +178,7 @@ export const ConteinerPlayer = styled.div`
     width: 610px;
     height: 92px;
     padding: 17px;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     gap: 16px;
     flex-shrink: 0;
@@ -194,4 +196,6 @@ export const DivEnviar = styled.div`
     align-items: flex-end;
     gap: 8px;
   `;
+
+
 

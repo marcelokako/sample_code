@@ -9,7 +9,7 @@ import Avatar from './../../assets/avatar-cacti-cactus-svgrepo-com.svg'
 const Home = () => {
 
   const [username, setUsername] = useState(null);
-  const [ placeholderText, setPlaceholder]= useState("");
+  const [ placeholderText, setPlaceholder]= useState("Ex: Abobrinha");
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
