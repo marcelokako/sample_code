@@ -1,4 +1,5 @@
 import React, { memo, useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import logo from './../../assets/Logo-symphonIA.svg';
 import * as S from './styles';
 import { Slider, Input } from 'antd';
@@ -10,16 +11,11 @@ const GameRoomAudioMix = () => {
   const [playbackRate, setPlaybackRate] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
   const player = new Tone.Player("resultado_user_1.wav").toDestination();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    player.load("resultado_user_1.wav")
-      .then(() => console.log("Áudio carregado"))
-      .catch(e => console.error("Erro ao carregar o áudio", e));
-  }, []);
-
-  useEffect(() => {
-    player.playbackRate = playbackRate;
-  }, [playbackRate]);
+  const next = () => {
+    navigate('/game-room');
+  };
 
   const startPlayback = async () => {
     if (Tone.context.state !== "running") {
@@ -44,6 +40,16 @@ const GameRoomAudioMix = () => {
       await player.start();
     }
   };
+
+  useEffect(() => {
+    player.load("resultado_user_1.wav")
+      .then(() => console.log("Áudio carregado"))
+      .catch(e => console.error("Erro ao carregar o áudio", e));
+  }, []);
+
+  useEffect(() => {
+    player.playbackRate = playbackRate;
+  }, [playbackRate]);
   
   return (
     <S.Conteiner>
@@ -88,7 +94,7 @@ const GameRoomAudioMix = () => {
               <img src="/play-circle.svg" alt="mesinha de dj" style={{ width: '53px', height: '53px'}} onClick={startPlayback}  />
               <img src="/pause.svg" alt="mesinha de dj"  style={{ width: '53px', height: '53px'}} onClick={stopPlayback} />
               <img src="/onda de audio 3.svg" alt="mesinha de dj"  style={{ width: '243px', height: '54px'}}/>
-              <img src="/check-circle-2.svg" alt="mesinha de dj"  style={{ width: '53px', height: '53px'}}/>
+              <img src="/check-circle-2.svg" alt="mesinha de dj"  style={{ width: '53px', height: '53px'}} onClick={next}/>
               <img src="/x-circle.svg" alt="mesinha de dj"  style={{ width: '53px', height: '53px'}}/>
             </S.AudioPlayer>
           </S.MixerSection2>
