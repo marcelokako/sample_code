@@ -58,3 +58,7 @@ CREATE TABLE public.trecho_base (
 ## Configuração
 
 O projeto inclui um arquivo de configuração que contém informações sensíveis. Infelizmente, este arquivo não está incluído no repositório público para garantir a segurança. Como resultado, tentar executar o programa sem o arquivo de configuração pode resultar em erros.
+
+No momento, este arquivo foi disponibilizado no link abaixo, para poder utilizar o arquivo de configuração dotenv, lembre-se de renomeá-lo para ".env" quando importar o repositório.
+
+[Link para arquivo de configuração env.txt](https://github.com/marcelokako/sample_code/blob/main/Back-end/env.txt)
