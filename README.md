@@ -6,7 +6,7 @@ Symphone.IA é um projeto desenvolvido pelo grupo Sample Code. Uma plataforma de
 
 ## Vídeo Demonstração
 
-<iframe width="640" height="360" src="[https://drive.google.com/file/d/SEU_ID_DE_VIDEO/preview](https://drive.google.com/file/d/1Zutb_NVHPyUlyzPtmGihOfk7lkmfxmmv/preview)" frameborder="0" allowfullscreen></iframe>
+<iframe width="640" height="360" src="https://drive.google.com/file/d/1Zutb_NVHPyUlyzPtmGihOfk7lkmfxmmv/preview" frameborder="0" allowfullscreen></iframe>
 
 ## Começando
 
